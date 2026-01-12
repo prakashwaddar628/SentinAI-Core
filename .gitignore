@@ -7,6 +7,14 @@ venv/
 env/
 .venv/
 
+# Database
+*.db
+*.sqlite3
+
+# Evidence / Media Storage
+evidence/
+backend/evidence/
+
 # Python Cache (Compiled bytecode)
 __pycache__/
 *.py[cod]

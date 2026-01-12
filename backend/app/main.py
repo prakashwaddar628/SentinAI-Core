@@ -109,6 +109,7 @@ async def analyze_frame(
 
     return {
         "status": "success",
+        "critical": len(combined_alerts) > 0,  # <--- THIS WAS MISSING
         "alerts_found": len(combined_alerts),
         "saved_to_db": len(saved_records) > 0,
         "alerts": combined_alerts
