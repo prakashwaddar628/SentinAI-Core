@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 // Connect to your Python Backend
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = "http://127.0.0.1:8000";
 
 export interface Alert {
-  type?: string;     // For SOS (e.g., "SOS_GESTURE")
-  class?: string;    // For YOLO (e.g., "fire", "accident")
+  type?: string; // For SOS (e.g., "SOS_GESTURE")
+  class?: string; // For YOLO (e.g., "fire", "accident")
   confidence: number;
   message?: string;
   bbox?: number[];
@@ -18,19 +18,39 @@ export interface AnalysisResponse {
   alerts: Alert[];
 }
 
-export const analyzeFrame = async (imageBlob: Blob): Promise<AnalysisResponse> => {
+export interface HistoryRecord {
+  id: number;
+  type: string;
+  confidence: number;
+  timestamp: string;
+  image_path?: string;
+}
+
+export const analyzeFrame = async (
+  imageBlob: Blob
+): Promise<AnalysisResponse> => {
   const formData = new FormData();
-  formData.append('file', imageBlob, 'frame.jpg');
+  formData.append("file", imageBlob, "frame.jpg");
 
   try {
     const response = await axios.post(`${API_URL}/analyze`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     });
     return response.data;
   } catch (error) {
     console.error("API Error:", error);
     throw error;
+  }
+};
+
+export const getHistory = async (): Promise<HistoryRecord[]> => {
+  try {
+    const response = await axios.get(`${API_URL}/history`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch history:", error);
+    return [];
   }
 };
