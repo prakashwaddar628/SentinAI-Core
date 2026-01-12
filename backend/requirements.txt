@@ -1,0 +1,8 @@
+fastapi==0.109.0
+uvicorn==0.27.0
+ultralytics==8.1.0      # For YOLOv11 / YOLOv8
+mediapipe==0.10.14       # For SOS Gesture
+opencv-python-headless  # Lightweight CV2 for server
+python-multipart        # For uploading video files
+pydantic==2.9.0
+python-dotenv
